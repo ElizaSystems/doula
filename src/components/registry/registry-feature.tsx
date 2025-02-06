@@ -14,7 +14,7 @@ interface RegistryItem {
   purchased: boolean
   purchasedBy?: string
   quantity: number
-  affiliateLink?: string
+  affiliateLink: string
 }
 
 const defaultRegistryItems: RegistryItem[] = [
@@ -53,12 +53,11 @@ const defaultRegistryItems: RegistryItem[] = [
 export function BabyRegistry() {
   const { publicKey } = useWallet()
   const [items, setItems] = useState<RegistryItem[]>(defaultRegistryItems)
-  const [newItem, setNewItem] = useState({
-    title: '',
-    description: '',
-    price: 0,
-    category: 'Essentials' as const,
-    quantity: 1
+  const [newItem, setNewItem] = useState<Partial<RegistryItem>>({
+    category: 'Essentials',
+    purchased: false,
+    quantity: 1,
+    affiliateLink: ''
   })
   const [editingId, setEditingId] = useState<string | null>(null)
 
@@ -82,17 +81,19 @@ export function BabyRegistry() {
     setItems([...items, {
       ...newItem,
       id: Date.now().toString(),
-      affiliateLink: '',
-      recommended: false,
       purchased: false,
-      quantity: newItem.quantity || 1
-    }])
+      quantity: newItem.quantity || 1,
+      affiliateLink: newItem.affiliateLink || '',
+      title: newItem.title,
+      description: newItem.description || '',
+      price: newItem.price || 0,
+      category: newItem.category || 'Essentials'
+    } as RegistryItem])
     setNewItem({
-      title: '',
-      description: '',
-      price: 0,
       category: 'Essentials',
-      quantity: 1
+      purchased: false,
+      quantity: 1,
+      affiliateLink: ''
     })
   }
 
