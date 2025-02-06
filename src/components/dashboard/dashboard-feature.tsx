@@ -8,6 +8,7 @@ import { WalletButton } from '../solana/solana-provider'
 import { IconCalendar, IconMessage, IconBook, IconUser } from '@tabler/icons-react'
 import { useCluster } from '../cluster/cluster-data-access'
 import toast from 'react-hot-toast'
+import { ShoppingList } from '../shopping/shopping-list'
 
 const resources = [
   { label: 'Pregnancy Week by Week', href: '/resources/pregnancy-timeline', progress: 0 },
@@ -218,6 +219,12 @@ export default function DashboardFeature() {
             >
               Resources
             </a>
+            <a 
+              className={`tab ${activeTab === 'shopping' ? 'tab-active' : ''}`}
+              onClick={() => setActiveTab('shopping')}
+            >
+              Shopping List
+            </a>
           </div>
 
           <div className="mt-6">
@@ -307,6 +314,12 @@ export default function DashboardFeature() {
                     </div>
                   </div>
                 ))}
+              </div>
+            )}
+
+            {activeTab === 'shopping' && (
+              <div className="max-w-4xl mx-auto">
+                <ShoppingList isAdmin={true} />
               </div>
             )}
           </div>
