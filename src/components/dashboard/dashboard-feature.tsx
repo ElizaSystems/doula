@@ -44,15 +44,39 @@ const doulaServices = [
   }
 ]
 
+// Mock data for development and fallback
+const mockUserData = {
+  weeksPregant: 24,
+  dueDate: '2024-08-15',
+  chatSessions: 24,
+  chatIncrease: 30,
+  resourcesCompleted: 3,
+  totalResources: 5,
+  activePackage: 'Pregnancy Support',
+  packageValidUntil: 'Dec 2024',
+  recentActivity: [
+    { text: 'Asked about morning sickness', completed: true },
+    { text: 'Completed Nutrition Guide', completed: true },
+    { text: 'Started Birth Plan', completed: false },
+    { text: 'Pack Hospital Bag', completed: false },
+  ]
+}
+
 export default function DashboardFeature() {
   const { publicKey } = useWallet()
   const { cluster } = useCluster()
   const [activeTab, setActiveTab] = useState('overview')
-  const [dueDate, setDueDate] = useState('')
-  const [weeksPregant, setWeeksPregnant] = useState(0)
-  const [connectionStatus, setConnectionStatus] = useState('connecting')
+  const [dueDate, setDueDate] = useState(mockUserData.dueDate)
+  const [weeksPregant, setWeeksPregnant] = useState(mockUserData.weeksPregant)
+  const [connectionStatus, setConnectionStatus] = useState('development')
 
   useEffect(() => {
+    // In development, we'll use mock data
+    if (process.env.NODE_ENV === 'development') {
+      setConnectionStatus('development')
+      return
+    }
+
     const checkConnection = async () => {
       try {
         const response = await fetch(cluster.endpoint, {
@@ -68,19 +92,17 @@ export default function DashboardFeature() {
         if (response.ok) {
           setConnectionStatus('connected')
         } else {
-          setConnectionStatus('error')
-          toast.error(`Connection error: ${cluster.name}`)
+          setConnectionStatus('mock')
+          toast.error(`Using offline mode due to connection issues`)
         }
       } catch (error) {
-        setConnectionStatus('error')
-        toast.error(`Failed to connect to ${cluster.name}`)
+        setConnectionStatus('mock')
         console.error('Connection error:', error)
+        toast.error(`Using offline mode due to connection issues`)
       }
     }
 
     checkConnection()
-    const interval = setInterval(checkConnection, 30000) // Check every 30 seconds
-    return () => clearInterval(interval)
   }, [cluster])
 
   if (!publicKey) {
@@ -100,17 +122,17 @@ export default function DashboardFeature() {
   const ConnectionStatus = () => (
     <div className={`badge ${
       connectionStatus === 'connected' ? 'badge-success' : 
-      connectionStatus === 'error' ? 'badge-error' : 
+      connectionStatus === 'development' ? 'badge-warning' :
       'badge-warning'
     } gap-2`}>
       <div className={`w-2 h-2 rounded-full ${
         connectionStatus === 'connected' ? 'bg-success' : 
-        connectionStatus === 'error' ? 'bg-error' : 
+        connectionStatus === 'development' ? 'bg-warning' :
         'bg-warning'
       } animate-pulse`}></div>
       {connectionStatus === 'connected' ? 'Connected' : 
-       connectionStatus === 'error' ? 'Connection Error' : 
-       'Connecting...'}
+       connectionStatus === 'development' ? 'Development Mode' :
+       'Offline Mode'}
     </div>
   )
 
@@ -227,10 +249,9 @@ export default function DashboardFeature() {
                   <div className="card-body">
                     <h2 className="card-title">Recent Activity</h2>
                     <ul className="steps steps-vertical">
-                      <li className="step step-primary">Asked about morning sickness</li>
-                      <li className="step step-primary">Completed Nutrition Guide</li>
-                      <li className="step">Started Birth Plan</li>
-                      <li className="step">Pack Hospital Bag</li>
+                      {mockUserData.recentActivity.map((activity, index) => (
+                        <li key={index} className={`step ${activity.completed ? 'step-primary' : ''}`}>{activity.text}</li>
+                      ))}
                     </ul>
                   </div>
                 </div>
