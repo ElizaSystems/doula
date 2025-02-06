@@ -113,7 +113,12 @@ export default function DashboardFeature() {
           <div className="max-w-md">
             <h1 className="text-5xl font-bold">AI Digital Doula</h1>
             <p className="py-6">Connect your wallet to access personalized pregnancy and birth support</p>
-            <WalletButton className="btn btn-primary" />
+            <div className="flex flex-col gap-4 items-center">
+              <WalletButton className="btn btn-primary" />
+              <a href="/how-it-works" className="btn btn-outline">
+                Learn How To Get Started
+              </a>
+            </div>
           </div>
         </div>
       </div>
