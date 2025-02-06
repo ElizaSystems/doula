@@ -4,12 +4,6 @@ import {SolanaProvider} from '@/components/solana/solana-provider'
 import {UiLayout} from '@/components/ui/ui-layout'
 import {ReactQueryProvider} from './react-query-provider'
 
-const links: { label: string; path: string }[] = [
-  { label: 'Ask a Doula', path: '/ask' },
-  { label: 'My Questions', path: '/my-questions' },
-  { label: 'Marketplace', path: '/marketplace' },
-]
-
 export const metadata = {
   title: 'AI Digital Doula',
   description: 'Your trusted companion through pregnancy and parenthood',
@@ -22,7 +16,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ReactQueryProvider>
           <ClusterProvider>
             <SolanaProvider>
-              <UiLayout links={links}>{children}</UiLayout>
+              <UiLayout>{children}</UiLayout>
             </SolanaProvider>
           </ClusterProvider>
         </ReactQueryProvider>

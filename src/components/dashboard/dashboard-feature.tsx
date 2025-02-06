@@ -1,38 +1,296 @@
 'use client'
 
+import { useState, useEffect } from 'react'
+import { useWallet } from '@solana/wallet-adapter-react'
 import { AppHero } from '../ui/ui-layout'
+import { DoulaChat } from '../doula/doula-chat'
+import { WalletButton } from '../solana/solana-provider'
+import { IconCalendar, IconMessage, IconBook, IconUser } from '@tabler/icons-react'
+import { useCluster } from '../cluster/cluster-data-access'
+import toast from 'react-hot-toast'
 
 const resources = [
-  { label: 'Pregnancy Week by Week', href: '/resources/pregnancy-timeline' },
-  { label: 'Birth Plan Templates', href: '/resources/birth-plans' },
-  { label: 'Nutrition Guidelines', href: '/resources/nutrition' },
-  { label: 'Common Pregnancy Symptoms', href: '/resources/symptoms' },
-  { label: 'Labor Positions Guide', href: '/resources/labor-positions' },
+  { label: 'Pregnancy Week by Week', href: '/resources/pregnancy-timeline', progress: 0 },
+  { label: 'Birth Plan Templates', href: '/resources/birth-plans', progress: 0 },
+  { label: 'Nutrition Guidelines', href: '/resources/nutrition', progress: 30 },
+  { label: 'Common Pregnancy Symptoms', href: '/resources/symptoms', progress: 60 },
+  { label: 'Labor Positions Guide', href: '/resources/labor-positions', progress: 10 },
+]
+
+const doulaServices = [
+  {
+    id: 1,
+    title: "Pregnancy Support Package",
+    description: "24/7 access to AI doula support throughout your pregnancy",
+    price: 1,
+    duration: "9 months",
+    features: ["Unlimited chat", "Weekly check-ins", "Custom birth plan"]
+  },
+  {
+    id: 2,
+    title: "Labor & Delivery Preparation",
+    description: "Comprehensive guidance for birth preparation",
+    price: 0.5,
+    duration: "3 months",
+    features: ["Birth positions", "Breathing techniques", "Partner support guide"]
+  },
+  {
+    id: 3,
+    title: "Postpartum Care",
+    description: "Support for the fourth trimester",
+    price: 0.7,
+    duration: "3 months",
+    features: ["Recovery tips", "Newborn care", "Emotional support"]
+  }
 ]
 
 export default function DashboardFeature() {
-  return (
-    <div>
-      <AppHero 
-        title="Welcome to AI Digital Doula" 
-        subtitle="Your trusted companion through pregnancy and parenthood." 
-      />
-      <div className="max-w-xl mx-auto py-6 sm:px-6 lg:px-8 text-center">
-        <div className="space-y-4">
-          <h2 className="text-2xl font-bold">Helpful Resources</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {resources.map((link, index) => (
-              <div key={index} className="card bg-base-100 shadow-hover">
-                <div className="card-body">
-                  <a href={link.href} className="link link-primary text-lg">
-                    {link.label}
-                  </a>
-                </div>
-              </div>
-            ))}
+  const { publicKey } = useWallet()
+  const { cluster } = useCluster()
+  const [activeTab, setActiveTab] = useState('overview')
+  const [dueDate, setDueDate] = useState('')
+  const [weeksPregant, setWeeksPregnant] = useState(0)
+  const [connectionStatus, setConnectionStatus] = useState('connecting')
+
+  useEffect(() => {
+    const checkConnection = async () => {
+      try {
+        const response = await fetch(cluster.endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            jsonrpc: '2.0',
+            id: 1,
+            method: 'getHealth',
+          }),
+        })
+        
+        if (response.ok) {
+          setConnectionStatus('connected')
+        } else {
+          setConnectionStatus('error')
+          toast.error(`Connection error: ${cluster.name}`)
+        }
+      } catch (error) {
+        setConnectionStatus('error')
+        toast.error(`Failed to connect to ${cluster.name}`)
+        console.error('Connection error:', error)
+      }
+    }
+
+    checkConnection()
+    const interval = setInterval(checkConnection, 30000) // Check every 30 seconds
+    return () => clearInterval(interval)
+  }, [cluster])
+
+  if (!publicKey) {
+    return (
+      <div className="hero min-h-screen bg-base-200">
+        <div className="hero-content text-center">
+          <div className="max-w-md">
+            <h1 className="text-5xl font-bold">AI Digital Doula</h1>
+            <p className="py-6">Connect your wallet to access personalized pregnancy and birth support</p>
+            <WalletButton className="btn btn-primary" />
           </div>
         </div>
       </div>
+    )
+  }
+
+  const ConnectionStatus = () => (
+    <div className={`badge ${
+      connectionStatus === 'connected' ? 'badge-success' : 
+      connectionStatus === 'error' ? 'badge-error' : 
+      'badge-warning'
+    } gap-2`}>
+      <div className={`w-2 h-2 rounded-full ${
+        connectionStatus === 'connected' ? 'bg-success' : 
+        connectionStatus === 'error' ? 'bg-error' : 
+        'bg-warning'
+      } animate-pulse`}></div>
+      {connectionStatus === 'connected' ? 'Connected' : 
+       connectionStatus === 'error' ? 'Connection Error' : 
+       'Connecting...'}
+    </div>
+  )
+
+  return (
+    <div className="container mx-auto p-4">
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-2xl font-bold">AI Digital Doula</h1>
+        <ConnectionStatus />
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-8">
+        <div className="stat bg-base-100 rounded-box">
+          <div className="stat-figure text-primary">
+            <IconCalendar size={24} />
+          </div>
+          <div className="stat-title">Weeks Pregnant</div>
+          <div className="stat-value">{weeksPregant}</div>
+          <div className="stat-desc">Due Date: {dueDate || 'Not set'}</div>
+        </div>
+        
+        <div className="stat bg-base-100 rounded-box">
+          <div className="stat-figure text-secondary">
+            <IconMessage size={24} />
+          </div>
+          <div className="stat-title">Chat Sessions</div>
+          <div className="stat-value">24</div>
+          <div className="stat-desc">↗︎ 8 (30%) more than last week</div>
+        </div>
+
+        <div className="stat bg-base-100 rounded-box">
+          <div className="stat-figure text-accent">
+            <IconBook size={24} />
+          </div>
+          <div className="stat-title">Resources Completed</div>
+          <div className="stat-value">3/5</div>
+          <div className="stat-desc">60% completion rate</div>
+        </div>
+
+        <div className="stat bg-base-100 rounded-box">
+          <div className="stat-figure text-info">
+            <IconUser size={24} />
+          </div>
+          <div className="stat-title">Active Package</div>
+          <div className="stat-value text-sm">Pregnancy Support</div>
+          <div className="stat-desc">Valid until Dec 2024</div>
+        </div>
+      </div>
+
+      {connectionStatus === 'error' ? (
+        <div className="alert alert-error">
+          <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <div>
+            <h3 className="font-bold">Connection Error</h3>
+            <div className="text-xs">Unable to connect to the Solana network. Please try again later or switch clusters.</div>
+          </div>
+        </div>
+      ) : (
+        <>
+          <div className="tabs tabs-boxed justify-center mb-6">
+            <a 
+              className={`tab ${activeTab === 'overview' ? 'tab-active' : ''}`}
+              onClick={() => setActiveTab('overview')}
+            >
+              Overview
+            </a>
+            <a 
+              className={`tab ${activeTab === 'chat' ? 'tab-active' : ''}`}
+              onClick={() => setActiveTab('chat')}
+            >
+              Chat with Doula
+            </a>
+            <a 
+              className={`tab ${activeTab === 'services' ? 'tab-active' : ''}`}
+              onClick={() => setActiveTab('services')}
+            >
+              Services
+            </a>
+            <a 
+              className={`tab ${activeTab === 'resources' ? 'tab-active' : ''}`}
+              onClick={() => setActiveTab('resources')}
+            >
+              Resources
+            </a>
+          </div>
+
+          <div className="mt-6">
+            {activeTab === 'overview' && (
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="card bg-base-100 shadow-xl">
+                  <div className="card-body">
+                    <h2 className="card-title">Pregnancy Timeline</h2>
+                    <div className="form-control w-full">
+                      <label className="label">
+                        <span className="label-text">Due Date</span>
+                      </label>
+                      <input 
+                        type="date" 
+                        value={dueDate}
+                        onChange={(e) => setDueDate(e.target.value)}
+                        className="input input-bordered w-full" 
+                      />
+                    </div>
+                    <div className="mt-4">
+                      <div className="radial-progress text-primary" style={{"--value": (weeksPregant/40)*100} as any}>
+                        {weeksPregant}/40 weeks
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="card bg-base-100 shadow-xl">
+                  <div className="card-body">
+                    <h2 className="card-title">Recent Activity</h2>
+                    <ul className="steps steps-vertical">
+                      <li className="step step-primary">Asked about morning sickness</li>
+                      <li className="step step-primary">Completed Nutrition Guide</li>
+                      <li className="step">Started Birth Plan</li>
+                      <li className="step">Pack Hospital Bag</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'chat' && (
+              <div className="max-w-4xl mx-auto">
+                <DoulaChat />
+              </div>
+            )}
+
+            {activeTab === 'services' && (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {doulaServices.map((service) => (
+                  <div key={service.id} className="card bg-base-100 shadow-xl">
+                    <div className="card-body">
+                      <h2 className="card-title">{service.title}</h2>
+                      <p>{service.description}</p>
+                      <ul className="menu bg-base-200 rounded-box my-4">
+                        {service.features.map((feature, index) => (
+                          <li key={index}><a>{feature}</a></li>
+                        ))}
+                      </ul>
+                      <div className="flex justify-between items-center mt-4">
+                        <span className="text-xl font-bold">{service.price} SOL</span>
+                        <span className="text-sm opacity-70">{service.duration}</span>
+                      </div>
+                      <div className="card-actions justify-end mt-4">
+                        <button className="btn btn-primary">Purchase</button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {activeTab === 'resources' && (
+              <div className="max-w-4xl mx-auto space-y-4">
+                {resources.map((resource, index) => (
+                  <div key={index} className="card bg-base-100 shadow-hover">
+                    <div className="card-body">
+                      <div className="flex justify-between items-center">
+                        <a href={resource.href} className="link link-primary text-lg">
+                          {resource.label}
+                        </a>
+                        <progress 
+                          className="progress progress-primary w-56" 
+                          value={resource.progress} 
+                          max="100"
+                        ></progress>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </>
+      )}
     </div>
   )
 }
