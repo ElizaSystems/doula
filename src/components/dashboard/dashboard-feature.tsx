@@ -9,6 +9,7 @@ import { IconCalendar, IconMessage, IconBook, IconUser } from '@tabler/icons-rea
 import { useCluster } from '../cluster/cluster-data-access'
 import toast from 'react-hot-toast'
 import { ShoppingList } from '../shopping/shopping-list'
+import { BabyRegistry } from '../registry/registry-feature'
 
 const resources = [
   { label: 'Pregnancy Week by Week', href: '/resources/pregnancy-timeline', progress: 0 },
@@ -230,6 +231,12 @@ export default function DashboardFeature() {
             >
               Shopping List
             </a>
+            <a 
+              className={`tab ${activeTab === 'registry' ? 'tab-active' : ''}`}
+              onClick={() => setActiveTab('registry')}
+            >
+              Baby Registry
+            </a>
           </div>
 
           <div className="mt-6">
@@ -326,6 +333,10 @@ export default function DashboardFeature() {
               <div className="max-w-4xl mx-auto">
                 <ShoppingList isAdmin={true} />
               </div>
+            )}
+
+            {activeTab === 'registry' && (
+              <BabyRegistry />
             )}
           </div>
         </>

@@ -7,13 +7,124 @@ body {
     height: 100%;
 }
 
+/* Light mode - Soft pastels */
+:root {
+    background: linear-gradient(135deg, #FFE5F1 0%, #E6F7FF 100%);
+    color: #1a1a1a;
+}
+
+/* Dark mode - Muted jewel tones */
+:root[data-theme="dark"] {
+    background: linear-gradient(135deg, #2D1B2E 0%, #1B2A41 100%);
+    color: #ffffff;
+}
+
+.navbar {
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(255, 182, 193, 0.2);
+}
+
+[data-theme="dark"] .navbar {
+    background: rgba(45, 27, 46, 0.95) !important;
+    border-bottom: 1px solid rgba(255, 182, 193, 0.1);
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.98) !important;
+    border: 1px solid rgba(255, 182, 193, 0.2);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] .card {
+    background: rgba(45, 27, 46, 0.98) !important;
+    border: 1px solid rgba(255, 182, 193, 0.1);
+}
+
+.stat {
+    background: rgba(255, 255, 255, 0.98) !important;
+    border: 1px solid rgba(255, 182, 193, 0.2);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] .stat {
+    background: rgba(45, 27, 46, 0.98) !important;
+    border: 1px solid rgba(255, 182, 193, 0.1);
+}
+
+.card:hover {
+    border-color: rgba(255, 182, 193, 0.4);
+    box-shadow: 0 4px 20px rgba(255, 182, 193, 0.2);
+}
+
+[data-theme="dark"] .card:hover {
+    border-color: rgba(255, 182, 193, 0.2);
+    box-shadow: 0 4px 20px rgba(255, 182, 193, 0.1);
+}
+
+.btn-primary {
+    background: #FF9FB6 !important;
+    border: none !important;
+}
+
+.btn-primary:hover {
+    background: #FF8BA7 !important;
+}
+
+.btn-outline {
+    border-color: #FF9FB6 !important;
+    color: #FF9FB6 !important;
+}
+
+[data-theme="dark"] .btn-outline {
+    color: #FFB6C1 !important;
+    border-color: #FFB6C1 !important;
+}
+
+.btn-outline:hover {
+    background: #FF9FB6 !important;
+    color: white !important;
+}
+
 .wallet-adapter-button-trigger {
-    background: rgb(100, 26, 230) !important;
+    background: #FF9FB6 !important;
     border-radius: 8px !important;
     padding-left: 16px !important;
     padding-right: 16px !important;
 }
+
 .wallet-adapter-dropdown-list,
 .wallet-adapter-button {
     font-family: inherit !important;
+}
+
+[data-theme="dark"] .badge-primary {
+    background: #FFB6C1 !important;
+}
+
+[data-theme="dark"] .progress-primary::-webkit-progress-value {
+    background: #FFB6C1;
+}
+
+[data-theme="dark"] .link-primary {
+    color: #FFB6C1 !important;
+}
+
+[data-theme="dark"] .tab-active {
+    background: #FF9FB6 !important;
+    color: white !important;
+}
+
+.input-bordered {
+    border-color: rgba(255, 182, 193, 0.2) !important;
+}
+
+[data-theme="dark"] .input-bordered {
+    border-color: rgba(255, 182, 193, 0.1) !important;
+}
+
+.input:focus {
+    border-color: #FF9FB6 !important;
+    box-shadow: 0 0 0 2px rgba(255, 159, 182, 0.2) !important;
 }
