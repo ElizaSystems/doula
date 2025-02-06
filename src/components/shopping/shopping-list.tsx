@@ -85,6 +85,15 @@ const defaultItems: ShoppingItem[] = [
     affiliateLink: 'https://amazon.com/pregnancy-tea',
     category: 'Essentials',
     recommended: false,
+  },
+  {
+    id: '9',
+    title: 'Pregnancy Tea Set', 
+    description: 'Organic herbal teas safe for pregnancy',
+    price: 22.99,
+    affiliateLink: 'https://amazon.com/pregnancy-tea',
+    category: 'Essentials',
+    recommended: false,
   }
 ]
 
