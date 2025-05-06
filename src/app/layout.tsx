@@ -5,8 +5,8 @@ import {UiLayout} from '@/components/ui/ui-layout'
 import {ReactQueryProvider} from './react-query-provider'
 
 export const metadata = {
-  title: 'AI Digital Doula',
-  description: 'Your trusted companion through pregnancy and parenthood',
+  title: 'BaiBai - The Art of Having a BaiBai',
+  description: 'A New Economy for Healing, Creativity & AI-Powered Emotional Wellness',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -1,14 +1,31 @@
-# baibai
+# BaiBai - The Art of Having a BaiBai
 
-## Getting Started
+## A New Economy for Healing, Creativity & AI-Powered Emotional Wellness
+
+BaiBai is a transformational self-expression and wellness platform that combines AI, art, and Web3 tools to help people process emotions, tell their stories, and heal — safely and beautifully. Powered by the $BaiBai token, this ecosystem is rooted in a book and personal journey, but rapidly expands into a monetizable community platform where users can earn by engaging, creating, and healing.
+
+Built for a world seeking new ways to understand and support mental wellness, BaiBai offers a powerful fusion: therapeutic AI companions, digital art creation, token rewards, and e-commerce tools — all wrapped in a heartfelt origin story by award-winning artist Amrita Sethi.
+
+## Core Features
+
+*   **BaiBai AI (Digital Doula):** AI-powered assistant for emotional support and journaling.
+*   **Bucket Monsters:** AI-generated emotional avatars.
+*   **SoundBYTEs:** Voice note to art transformation.
+*   **Presents of Sound:** Generative sound-and-motion art.
+*   **Baby Gods & Goddesses:** Spiritual newborn-themed prints.
+*   **Marketplace:** Curated products and services.
+*   **$BaiBai Token:** For rewards and platform utility.
+
+## Getting Started (Development)
+
+(This section will be updated with project-specific setup instructions as we build out the platform.)
 
 ### Prerequisites
 
 - Node v18.18.0 or higher
-
-- Rust v1.77.2 or higher
-- Anchor CLI 0.30.1 or higher
-- Solana CLI 1.18.17 or higher
+- Rust (latest stable)
+- Anchor CLI (latest stable)
+- Solana CLI (latest stable)
 
 ### Installation
 
@@ -16,79 +33,41 @@
 
 ```shell
 git clone <repo-url>
-cd <repo-name>
+cd baibai
 ```
 
 #### Install Dependencies
 
 ```shell
-pnpm install
+pnpm install # or npm install / yarn install
 ```
 
 #### Start the web app
 
+```shell
+pnpm dev # or npm run dev / yarn dev
 ```
-pnpm dev
-```
 
-## Apps
+#### Anchor Program
 
-### anchor
-
-This is a Solana program written in Rust using the Anchor framework.
-
-#### Commands
-
-You can use any normal anchor commands. Either move to the `anchor` directory and run the `anchor` command or prefix the command with `pnpm`, eg: `pnpm anchor`.
-
-#### Sync the program id:
-
-Running this command will create a new keypair in the `anchor/target/deploy` directory and save the address to the Anchor config file and update the `declare_id!` macro in the `./src/lib.rs` file of the program.
-
-You will manually need to update the constant in `anchor/lib/basic-exports.ts` to match the new program id.
+The Solana program built with Anchor is located in the `anchor/` directory.
 
 ```shell
-pnpm anchor keys sync
+# Navigate to the anchor directory
+cd anchor
+
+# Build the program
+anchor build
+
+# Run tests
+anchor test
+
+# Deploy (e.g., to localnet)
+anchor deploy
 ```
 
-#### Build the program:
-
-```shell
-pnpm anchor-build
-```
-
-#### Start the test validator with the program deployed:
-
-```shell
-pnpm anchor-localnet
-```
-
-#### Run the tests
-
-```shell
-pnpm anchor-test
-```
-
-#### Deploy to Devnet
-
-```shell
-pnpm anchor deploy --provider.cluster devnet
-```
-
-### web
-
-This is a React app that uses the Anchor generated client to interact with the Solana program.
-
-#### Commands
-
-Start the web app
-
-```shell
-pnpm dev
-```
-
-Build the web app
-
-```shell
-pnpm build
-```
+## Contact
+📧 connect@amritasethi.com
+🌐 Website: [Insert]
+🪙 Token: https://pump.fun/coin/52PFfC6Y7UzcGy1V1s4Go7XJfdoifPm2vB7WEh88pump
+🎨 Art Store: [Insert]

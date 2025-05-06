@@ -16,8 +16,23 @@ export function UiLayout({ children }: { children: ReactNode }) {
       <div className="navbar bg-base-300 dark:text-neutral-content">
         <div className="flex-1">
           <Link className="btn btn-ghost normal-case text-xl" href="/">
-            AI Digital Doula
+            BaiBai
           </Link>
+          <ul className="menu menu-horizontal px-1 ml-4">
+            <li>
+              <details>
+                <summary>Features</summary>
+                <ul className="p-2 bg-base-100 rounded-t-none z-50">
+                  <li><Link href="/baibai-ai">BaiBai AI</Link></li>
+                  <li><Link href="/bucket-monsters">Bucket Monsters</Link></li>
+                  <li><Link href="/soundbytes">SoundBYTEs</Link></li>
+                  <li><Link href="/presents-of-sound">Presents of Sound</Link></li>
+                  <li><Link href="/baby-gods-goddesses">Baby Gods & Goddesses</Link></li>
+                  <li><Link href="/marketplace">Marketplace</Link></li>
+                </ul>
+              </details>
+            </li>
+          </ul>
         </div>
         <div className="flex-none space-x-2">
           <label className="swap swap-rotate">

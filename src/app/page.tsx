@@ -1,5 +1,10 @@
-import DashboardFeature from '@/components/dashboard/dashboard-feature'
+import { AppHero } from '@/components/ui/ui-layout';
 
 export default function Page() {
-  return <DashboardFeature />
+  return (
+    <AppHero
+      title="Welcome to BaiBai"
+      subtitle="A New Economy for Healing, Creativity & AI-Powered Emotional Wellness."
+    />
+  );
 }
