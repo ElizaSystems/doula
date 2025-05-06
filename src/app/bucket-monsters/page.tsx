@@ -87,7 +87,7 @@ export default function BucketMonstersPage() {
             {monster.name} is here to support you. Check in regularly to see how it reflects your journey and earn $BaiBai tokens!
           </p>
           <p className="mt-2 text-xs italic text-neutral-content/70">
-            Future feature: Watch {monster.name} evolve and transform. You'll even be able to mint it as an NFT!
+            Future feature: Watch {monster.name} evolve and transform. Youll even be able to mint it as an NFT!
           </p>
         </div>
       </section>
@@ -116,8 +116,8 @@ export default function BucketMonstersPage() {
       {/* Placeholder for Monster Collection/Evolution - for later development */}
       {/* 
       <section>
-        <h2 className="text-2xl font-semibold mb-4">Your Monster's Journey</h2>
-        <p className="text-neutral-content">Track {monster.name}'s evolution and past moods here.</p>
+        <h2 className="text-2xl font-semibold mb-4">{"Your Monster's Journey"}</h2>
+        <p className="text-neutral-content">{`Track ${monster.name}'s evolution and past moods here.`}</p>
       </section>
       */}
     </div>

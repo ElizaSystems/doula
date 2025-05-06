@@ -90,10 +90,10 @@ export default function BabyGodsGoddessesPage() {
       <section className="text-center p-8 bg-base-100 rounded-lg shadow-lg">
         <h2 className="text-3xl font-semibold mb-4 text-accent">A Gift of Art & Soul</h2>
         <p className="text-lg text-neutral-content mb-6 max-w-3xl mx-auto">
-          Each "Baby Gods & Goddesses" print is thoughtfully designed by Amrita Sethi, blending spiritual symbolism with modern aesthetics. These artworks serve as beautiful nursery decor and meaningful keepsakes.
+          Each &quot;Baby Gods &amp; Goddesses&quot; print is thoughtfully designed by Amrita Sethi, blending spiritual symbolism with modern aesthetics. These artworks serve as beautiful nursery decor and meaningful keepsakes.
         </p>
         <p className="text-lg text-neutral-content mb-4 max-w-3xl mx-auto">
-          Choose to pair your physical print with a unique digital twin – an NFT that certifies authenticity and can become part of your child's digital legacy. Purchases can be made using traditional currency or with your $BaiBai tokens.
+          Choose to pair your physical print with a unique digital twin – an NFT that certifies authenticity and can become part of your child&apos;s digital legacy. Purchases can be made using traditional currency or with your $BaiBai tokens.
         </p>
         <p className="text-sm text-neutral-content/70 max-w-3xl mx-auto">
           (Secure checkout and NFT minting process coming soon via our Marketplace.)

@@ -53,7 +53,7 @@ export default function BaiBaiAiPage() {
       </header>
 
       <section className="mb-8 p-6 bg-base-200 rounded-lg shadow">
-        <h2 className="text-2xl font-semibold mb-3 text-secondary">Today's Reflection Prompt:</h2>
+        <h2 className="text-2xl font-semibold mb-3 text-secondary">Todays Reflection Prompt:</h2>
         <p className="italic text-lg">{aiPrompt}</p>
       </section>
 
